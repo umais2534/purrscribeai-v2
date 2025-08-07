@@ -83,14 +83,16 @@ React.useEffect(() => {
       </Button>
 
       {/* Sidebar */}
-    <div
+   <div
   className={cn(
-    "fixed inset-y-0 left-0 z-40 bg-[#E6EFFF] border-r shadow-sm transition-all duration-100 md:relative flex flex-col",
-    expanded ? "w-60" : "w-16"
+    "fixed inset-y-0 left-0 z-40 bg-[#E6EFFF] border-r shadow-sm transition-all duration-200 md:relative flex flex-col",
+    expanded ? "w-60" : "w-16",
+    "transition-transform",
+    expanded || window.innerWidth >= 640 ? "translate-x-0" : "-translate-x-full"
   )}
 >
   {/* Logo */}
-  <div className="flex items-center justify-center h-[60px] border-b">
+  <div className="flex items-center justify-center h-[80px] border-b pt-2">
     <img
       src={expanded ? "/purrscribe.svg" : "/fulllogo_transparent.png"}
       alt="PurrScribe Logo"
@@ -100,7 +102,7 @@ React.useEffect(() => {
 
   {/* Navigation Items */}
   <div
-  className="flex-1 overflow-y-auto p-4"
+  className="flex-1 overflow-y-auto p-4 pt-10"
   style={{
     rowGap: window.innerHeight > 500 ? "1rem" : "0", // 1rem = 16px gap
     display: "flex",
@@ -169,22 +171,27 @@ React.useEffect(() => {
       </Avatar>
     </div>
 
-    {dropdownOpen && (
-     <div className="p-4 border-t mt-auto">
-  <Button
-    variant="ghost"
-    className={cn(
-      "flex items-center text-muted-foreground hover:text-foreground w-full px-2",
-      !expanded && "justify-center"
-    )}
-    onClick={handleLogout}
-  >
-    <LogOut size={20} className="mr-2" />
-    {expanded && <span>Logout</span>}
-  </Button>
-</div>
+  {dropdownOpen && (
+  <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-md z-50">
+    <button
+      className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+      onClick={() => {
+        setDropdownOpen(false);
+        // navigate to settings
+        window.location.href = "/settings"; // or use `useNavigate()`
+      }}
+    >
+      Settings
+    </button>
+    <button
+      className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+      onClick={handleLogout}
+    >
+      Logout
+    </button>
+  </div>
+)}
 
-    )}
   </div>
 </header>
 

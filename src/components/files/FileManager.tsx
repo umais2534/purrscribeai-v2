@@ -20,7 +20,7 @@ const FileManager = () => {
       type: "application/pdf",
       size: 2500000,
       uploadDate: new Date(2023, 5, 15),
-      url: "#",
+       url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
     },
     {
       id: "2",
@@ -52,8 +52,9 @@ const FileManager = () => {
     <div className="container mx-auto py-6">
       <h1 className="text-3xl font-bold mb-6">File Management</h1>
 
-      <Tabs defaultValue="upload" className="w-full">
-        <TabsList className="grid w-full max-w-md grid-cols-2 mb-8">
+      <Tabs defaultValue="upload" className="w-full ">
+      <TabsList className="grid w-full max-w-md grid-cols-1 sm:grid-cols-2 gap-2 mb-12">
+
           <TabsTrigger value="upload">Upload Files</TabsTrigger>
           <TabsTrigger value="manage">Manage Files</TabsTrigger>
         </TabsList>

@@ -126,28 +126,30 @@ const ViewPetDialog = ({ isOpen, onOpenChange, pet, onEdit, onDelete }: ViewPetD
           </div>
         </div>
         
-        <DialogFooter className="flex justify-between sm:justify-between">
-          <Button
-            variant="outline"
-            onClick={() => onDelete(pet.id)}
-            className="gap-2"
-          >
-            <Trash2 size={16} />
-            Delete Pet
-          </Button>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              Close
-            </Button>
-            <Button className="gap-2" onClick={onEdit}>
-              <Edit size={16} />
-              Edit Pet
-            </Button>
-          </div>
-        </DialogFooter>
+      <DialogFooter className="flex justify-between sm:justify-between dialog-footer-stack">
+  <Button
+    variant="outline"
+    onClick={() => onDelete(pet.id)}
+    className="gap-2 w-full"
+  >
+    <Trash2 size={16} />
+    Delete Pet
+  </Button>
+  <div className="flex gap-2 w-full justify-end">
+    <Button
+      variant="outline"
+      onClick={() => onOpenChange(false)}
+      className="w-full "
+    >
+      Close
+    </Button>
+    <Button className="gap-2 w-full mb-5" onClick={onEdit}>
+      <Edit size={16} />
+      Edit Pet
+    </Button>
+  </div>
+</DialogFooter>
+
       </DialogContent>
     </Dialog>
   );

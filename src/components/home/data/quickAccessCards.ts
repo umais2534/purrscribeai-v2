@@ -44,14 +44,14 @@ export const quickAccessCardData = [
     description: "Upload, view, and share documents",
     icon: FileText,
     path: "/files",
-    color: "bg-accent-purple-50",
+   
   },
   {
     title: "Manage Clinics",
     description: "Organize your veterinary clinics",
     icon: Building2,
     path: "/clinics",
-    color: "bg-accent-teal-50",
+   
   },
   {
     title: "Manage Templates",

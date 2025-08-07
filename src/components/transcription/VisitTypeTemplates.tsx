@@ -109,78 +109,77 @@ const VisitTypeTemplates: React.FC<VisitTypeTemplatesProps> = ({
 
   return (
     <div className="space-y-4 mt-10 mr-8">
-      <div className="flex justify-between items-center flex justify-between items-center mb-6 bg-gradient-to-r from-[#F0F4FF] to-[#E0ECFF] rounded-xl w-[100%]  p-6 shadow-sm mb-8">
-        <h3 className="text-lg font-medium ">Visit Type Templates</h3>
-        <Dialog open={isAddTemplateOpen} onOpenChange={setIsAddTemplateOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Template
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create New Template</DialogTitle>
-              <DialogDescription>
-                Create a new visit type template to use in your recordings.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="template-name">Template Name</Label>
-                <Input
-                  id="template-name"
-                  value={newTemplate.name}
-                  onChange={(e) =>
-                    setNewTemplate({ ...newTemplate, name: e.target.value })
-                  }
-                  placeholder="e.g., Dental Examination"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="template-description">
-                  Description (Optional)
-                </Label>
-                <Input
-                  id="template-description"
-                  value={newTemplate.description}
-                  onChange={(e) =>
-                    setNewTemplate({
-                      ...newTemplate,
-                      description: e.target.value,
-                    })
-                  }
-                  placeholder="Brief description of when to use this template"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="template-content">Template Content</Label>
-                <Textarea
-                  id="template-content"
-                  value={newTemplate.template}
-                  onChange={(e) =>
-                    setNewTemplate({
-                      ...newTemplate,
-                      template: e.target.value,
-                    })
-                  }
-                  placeholder="Enter the template structure here..."
-                  className="min-h-[200px] font-mono"
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsAddTemplateOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button onClick={handleAddTemplate}>Create Template</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+     <div className="flex justify-between items-center flex-wrap max-[400px]:flex-col max-[400px]:items-start gap-4 mb-6 bg-gradient-to-r from-[#F0F4FF] to-[#E0ECFF] rounded-xl w-full p-0 sm:p-5 shadow-sm mb-8">
+  <h3 className="text-2xl font-bold">Visit Type Templates</h3>
+  
+  <Dialog open={isAddTemplateOpen} onOpenChange={setIsAddTemplateOpen}>
+    <DialogTrigger asChild>
+     <Button className="w-full sm:w-auto sm:self-end self-center">
+
+        <Plus className="mr-2 h-4 w-4" />
+        Add Template
+      </Button>
+    </DialogTrigger>
+
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Create New Template</DialogTitle>
+        <DialogDescription>
+          Create a new visit type template to use in your recordings.
+        </DialogDescription>
+      </DialogHeader>
+      <div className="grid gap-4 py-4">
+        <div className="grid gap-2">
+          <Label htmlFor="template-name">Template Name</Label>
+          <Input
+            id="template-name"
+            value={newTemplate.name}
+            onChange={(e) =>
+              setNewTemplate({ ...newTemplate, name: e.target.value })
+            }
+            placeholder="e.g., Dental Examination"
+          />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="template-description">Description (Optional)</Label>
+          <Input
+            id="template-description"
+            value={newTemplate.description}
+            onChange={(e) =>
+              setNewTemplate({
+                ...newTemplate,
+                description: e.target.value,
+              })
+            }
+            placeholder="Brief description of when to use this template"
+          />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="template-content">Template Content</Label>
+          <Textarea
+            id="template-content"
+            value={newTemplate.template}
+            onChange={(e) =>
+              setNewTemplate({
+                ...newTemplate,
+                template: e.target.value,
+              })
+            }
+            placeholder="Enter the template structure here..."
+            className="min-h-[200px] font-mono"
+          />
+        </div>
       </div>
+      <DialogFooter>
+        <Button variant="outline" onClick={() => setIsAddTemplateOpen(false)}>
+          Cancel
+        </Button>
+        <Button onClick={handleAddTemplate}>Create Template</Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+</div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
   {templates.map((template) => (

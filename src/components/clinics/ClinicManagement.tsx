@@ -250,55 +250,53 @@ const ClinicManagement: React.FC<ClinicManagementProps> = ({ initialClinics = in
 
   return (
     <div className="bg-background p-6 rounded-lg w-full">
-      <div className="flex justify-between items-center bg-gradient-to-r from-[#F0F4FF] to-[#E0ECFF] rounded-xl w-[100%] p-6 shadow-sm mb-8">
-        <h1 className="text-2xl font-bold">Clinic Management</h1>
-        <Dialog
-          open={isAddClinicDialogOpen}
-          onOpenChange={setIsAddClinicDialogOpen}
-        >
-          <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
-              <Plus size={16} />
-              Add Clinic
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col">
-            <DialogHeader>
-              <DialogTitle>
-                <div className="relative -mt-6 bg-[#272E3F] text-white text-center pt-0 pb-0 rounded-b-[110px] overflow-hidden w-[40%] mx-auto">
-                  <h2 className="text-lg font-semibold z-10 relative">Add New Clinic</h2>
-                  <svg
-                    className="absolute bottom-0 left-0 w-full"
-                    viewBox="0 0 500 50"
-                    preserveAspectRatio="none"
-                  >
-                    <path d="M0,0 C125,50 375,50 500,0 L500,50 L0,50 Z" fill="#272E3F" />
-                  </svg>
-                </div>
-              </DialogTitle>
-              <DialogDescription>
-                Enter the details of the new clinic to add to your records.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="overflow-y-auto pr-1 flex-1">
-              <ClinicForm 
-                clinic={newClinic} 
-                onInputChange={handleInputChange} 
-                isUploading={isUploading} 
-              />
-            </div>
-            <DialogFooter className="pt-4 sticky bottom-0 bg-white border-t mt-2">
-              <Button
-                variant="outline"
-                onClick={() => setIsAddClinicDialogOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button onClick={handleAddClinic}>Add Clinic</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+     <div className="flex flex-col gap-4 items-start sm:flex-row sm:justify-between sm:items-center bg-gradient-to-r from-[#F0F4FF] to-[#E0ECFF] rounded-xl w-fullp-0 sm:p-5 shadow-sm mb-8">
+  <h1 className="text-2xl font-bold">Clinic Management</h1>
+  <Dialog open={isAddClinicDialogOpen} onOpenChange={setIsAddClinicDialogOpen}>
+    <DialogTrigger asChild>
+      <Button className="flex items-center gap-2">
+        <Plus size={16} />
+        Add Clinic
+      </Button>
+    </DialogTrigger>
+    <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col">
+      <DialogHeader>
+        <DialogTitle>
+          <div className="relative -mt-6 bg-[#272E3F] text-white text-center pt-0 pb-0 rounded-b-[110px] overflow-hidden w-[40%] mx-auto">
+            <h2 className="text-lg font-semibold z-10 relative">Add New Clinic</h2>
+            <svg
+              className="absolute bottom-0 left-0 w-full"
+              viewBox="0 0 500 50"
+              preserveAspectRatio="none"
+            >
+              <path d="M0,0 C125,50 375,50 500,0 L500,50 L0,50 Z" fill="#272E3F" />
+            </svg>
+          </div>
+        </DialogTitle>
+        <DialogDescription>
+          Enter the details of the new clinic to add to your records.
+        </DialogDescription>
+      </DialogHeader>
+      <div className="overflow-y-auto pr-1 flex-1">
+        <ClinicForm 
+          clinic={newClinic} 
+          onInputChange={handleInputChange} 
+          isUploading={isUploading} 
+        />
       </div>
+      <DialogFooter className="pt-4 sticky bottom-0 bg-white border-t mt-2">
+        <Button
+          variant="outline"
+          onClick={() => setIsAddClinicDialogOpen(false)}
+        >
+          Cancel
+        </Button>
+        <Button onClick={handleAddClinic}>Add Clinic</Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+</div>
+
 
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
         <div className="relative w-full md:max-w-md">

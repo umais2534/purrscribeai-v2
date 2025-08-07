@@ -46,6 +46,7 @@ const PetsGrid = ({
       {pets.map((pet) => (
         <Card
           key={pet.id}
+           onClick={() => onViewPet(pet)}
           className="overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.2)] transition-transform transform hover:scale-105 group"
         >
           <div className="relative h-48 overflow-hidden">

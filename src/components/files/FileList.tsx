@@ -147,8 +147,9 @@ export const FileList = ({ files, onDelete }: FileListProps) => {
       </div>
 
       {sortedFiles.length > 0 ? (
-        <div className="border rounded-md overflow-hidden">
-          <table className="w-full">
+       <div className="border rounded-md overflow-x-auto">
+  <table className="w-full min-w-[600px]">
+
             <thead>
               <tr className="bg-muted/50">
                 <th className="text-left p-3 font-medium text-sm">
