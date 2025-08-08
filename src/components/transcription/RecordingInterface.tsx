@@ -100,7 +100,8 @@ const RecordingInterface: React.FC<RecordingInterfaceProps> = ({
   const [format, setFormat] = useState("raw");
   const [transcriptionText, setTranscriptionText] = useState("");
   const [editableText, setEditableText] = useState("");
-  const [combinedText, setCombinedText] = useState("");
+  const [templateText, setTemplateText] = useState("");
+  const [speechText, setSpeechText] = useState("");
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [isTranscriptionComplete, setIsTranscriptionComplete] = useState(false);
   const [permissionDenied, setPermissionDenied] = useState(false);
@@ -170,9 +171,9 @@ const RecordingInterface: React.FC<RecordingInterfaceProps> = ({
     setRecordingUUID(generateUUID());
   }, []);
 
-  // Apply template with spoken text
-  const applyTemplate = (spokenText = "") => {
-    if (!selectedTemplate) return spokenText;
+  // Apply template (without speech text)
+  const applyTemplate = () => {
+    if (!selectedTemplate) return "";
     
     const pet = mockPets.find((p) => p.id === selectedPet);
     const clinic = mockClinics.find((c) => c.id === selectedClinic);
@@ -183,24 +184,34 @@ const RecordingInterface: React.FC<RecordingInterfaceProps> = ({
       .replace(/\{CLINIC_NAME\}/g, clinic?.name || "")
       .replace(/\{VISIT_TYPE\}/g, visitType || "")
       .replace(/\{DATE\}/g, new Date().toLocaleDateString())
-      .replace(/\{NOTES\}/g, spokenText);
+      .replace(/\{NOTES\}/g, ""); // Leave notes empty for live dictation
   };
 
-  // Update combined text when template or speech changes
+  // Update template text when details change
   useEffect(() => {
     if (selectedTemplate) {
-      const newText = applyTemplate(isRecording ? transcript : "");
-      setCombinedText(newText);
-      setTranscriptionText(newText);
-      setEditableText(newText);
+      const newTemplateText = applyTemplate();
+      setTemplateText(newTemplateText);
+      setEditableText(isRecording ? `${newTemplateText}\n\n--- LIVE DICTATION ---\n${speechText}` : newTemplateText);
     } else {
-      setCombinedText(transcript);
-      setTranscriptionText(transcript);
-      setEditableText(transcript);
+      setTemplateText("");
+      setEditableText(isRecording ? speechText : "");
     }
-  }, [transcript, selectedTemplate, selectedPet, selectedClinic, visitType]);
+  }, [selectedTemplate, selectedPet, selectedClinic, visitType]);
 
-  // Update display text animation
+  // Update speech text during recording
+  useEffect(() => {
+    if (isRecording) {
+      setSpeechText(transcript);
+      setEditableText(
+        selectedTemplate 
+          ? `${templateText}\n\n--- LIVE DICTATION ---\n${transcript}`
+          : transcript
+      );
+    }
+  }, [transcript, isRecording]);
+
+  // Text animation effect
   useEffect(() => {
     let isCancelled = false;
     const animateText = async () => {
@@ -262,18 +273,16 @@ const RecordingInterface: React.FC<RecordingInterfaceProps> = ({
   const handleTemplateSelect = (template: VisitTypeTemplate) => {
     setSelectedTemplate(template);
     setIsTemplateDialogOpen(false);
-    const newText = applyTemplate();
-    setCombinedText(newText);
-    setTranscriptionText(newText);
-    setEditableText(newText);
+    const newTemplateText = applyTemplate();
+    setTemplateText(newTemplateText);
+    setEditableText(newTemplateText);
   };
 
   // Clear template
   const clearTemplate = () => {
     setSelectedTemplate(null);
-    setCombinedText(transcript);
-    setTranscriptionText(transcript);
-    setEditableText(transcript);
+    setTemplateText("");
+    setEditableText(isRecording ? speechText : "");
   };
 
   // Recording controls
@@ -332,7 +341,10 @@ const RecordingInterface: React.FC<RecordingInterfaceProps> = ({
       timerRef.current = null;
     }
 
-    const finalText = selectedTemplate ? applyTemplate(transcript) : transcript;
+    const finalText = selectedTemplate
+      ? `${templateText}\n\n--- NOTES ---\n${transcript}`
+      : transcript;
+
     setTranscriptionText(finalText);
     setEditableText(finalText);
     setIsTranscriptionComplete(true);
@@ -364,7 +376,8 @@ const RecordingInterface: React.FC<RecordingInterfaceProps> = ({
     setRecordingTime(0);
     setTranscriptionText("");
     setEditableText("");
-    setCombinedText("");
+    setTemplateText("");
+    setSpeechText("");
     setIsTranscriptionComplete(false);
     setSelectedPet(undefined);
     setSelectedClinic(undefined);
@@ -379,7 +392,8 @@ const RecordingInterface: React.FC<RecordingInterfaceProps> = ({
   const discardTranscription = () => {
     setTranscriptionText("");
     setEditableText("");
-    setCombinedText("");
+    setTemplateText("");
+    setSpeechText("");
     setIsTranscriptionComplete(false);
     setRecordingTime(0);
     setIsDiscardDialogOpen(false);
@@ -802,6 +816,28 @@ const RecordingInterface: React.FC<RecordingInterfaceProps> = ({
                     </div>
                   </div>
                 )}
+
+                {/* Template text display */}
+                {selectedTemplate && (
+                  <div className="p-4 bg-gray-50 rounded-md">
+                    <h3 className="font-medium mb-2">Template Text:</h3>
+                    <div className="whitespace-pre-wrap text-sm text-gray-700">
+                      {templateText}
+                    </div>
+                  </div>
+                )}
+
+                {/* Live dictation display during recording */}
+                {isRecording && (
+                  <div className="p-4 bg-blue-50 rounded-md">
+                    <h3 className="font-medium mb-2">Live Dictation:</h3>
+                    <div className="whitespace-pre-wrap text-sm text-blue-700">
+                      {speechText}
+                    </div>
+                  </div>
+                )}
+
+                {/* Combined text area */}
                 <Textarea
                   value={editableText}
                   onChange={handleTextChange}
